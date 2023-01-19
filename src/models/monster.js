@@ -86,7 +86,7 @@ const monsterSchema = new mongoose.Schema({
     }
 );
 
-// retire ces clés du retour JSON
+// retire des clés du retour JSON
 monsterSchema.methods.toJSON = function () {
     const monster = this.toObject();
 
@@ -113,6 +113,8 @@ monsterSchema.methods.generateAuthTokenAndSaveMonster = async function () {
     return authToken;
 
 }
+
+// compare
 
 // hash password
 monsterSchema.pre('save', async function () {

@@ -10,7 +10,7 @@ router.post('/monsters', async (req, res, next) => {
     try {
         const authToken = await monster.generateAuthTokenAndSaveMonster();
         const message = "Un monstre nous a rejoins avec succès.";
-        res.status(201).json({ message, monster });
+        res.status(201).json({ message, monster, authToken });
     } catch (error) {
         const message = "Un monstre a échoué à nous rejondre.";
         res.status(400).json({ message, error });
@@ -18,7 +18,6 @@ router.post('/monsters', async (req, res, next) => {
 });
 
 router.get('/monsters', async (req, res, next) => {
-
     try {
         const monsters = await Monster.find();
         const message = "La liste des nos membres a bien été récupérée.";
@@ -28,5 +27,7 @@ router.get('/monsters', async (req, res, next) => {
         res.status(500).json({ message, error });
     }
 });
+
+
 
 module.exports = router;
