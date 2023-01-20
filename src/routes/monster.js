@@ -1,6 +1,6 @@
-const express = require('express');
-const Monster = require('../models/monster');
-const authentication = require('../middlewares/authentication');
+import express from 'express';
+import Monster from '../models/monster.js';
+import authentication from '../middlewares/authentication.js';
 
 const router = express.Router();
 
@@ -10,20 +10,20 @@ router.post('/monsters', async (req, res, next) => {
     try {
         const authToken = await monster.generateAuthTokenAndSaveMonster();
         const message = "Un monstre nous a rejoins avec succès.";
-        res.status(201).json({ message, monster, authToken });
+        res.status(201).json({ message, monster }); //authToken
     } catch (error) {
-        const message = "Un monstre a échoué à nous rejondre.";
+        const message = "Un monstre a échoué à nous rejoindre.";
         res.status(400).json({ message, error });
     }
 });
 
-router.get('/monsters', async (req, res, next) => {
+router.get('/monsters', authentication, async (req, res, next) => {
     try {
         const monsters = await Monster.find();
         const message = "La liste des membres a bien été récupérée.";
         res.json({ message, monsters });
     } catch (error) {
-        const message = "La liste des membres n'a pu être récupérée.";
+        const message = "La liste des membres n\'a pu être récupérée.";
         res.status(500).json({ message, error });
     }
 });
@@ -59,5 +59,4 @@ router.delete('/monsters/me', authentication, async (req, res, next) => {
 });
 
 
-
-module.exports = router;
+export default router;

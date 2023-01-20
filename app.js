@@ -1,16 +1,25 @@
-const express = require('express');
-const morgan = require('morgan');
-const { connectDb } = require('./src/services/server');
-const monsterRoutes = require('./src/routes/monster');
+import "dotenv/config.js";
+import express from 'express';
+import { connectDb } from './src/services/server.js';
+import monsterRoutes from './src/routes/monster.js';
+import loginRoutes from './src/routes/login.js';
+import logoutRoutes from './src/routes/logout.js';
 
 const app = express();
 const port = process.env.PORT || 3000;
 
-app.use(morgan('dev'))
+app
     .use(express.json())
-    .use(monsterRoutes);
+    .use(monsterRoutes)
+    .use(loginRoutes)
+    .use(logoutRoutes);
 
 connectDb().catch(error => console.log(error));
+
+app.use(({res}) => {
+    const message = "Cette URL n'existe pas.";
+    res.status(404).json({ message });
+});
 
 
 app.listen(port, () =>

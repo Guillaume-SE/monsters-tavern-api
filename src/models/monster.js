@@ -1,10 +1,9 @@
-require('dotenv').config();
-const mongoose = require('mongoose');
-const validator = require('validator');
-const bcrypt = require('bcrypt');
-const jwt = require('jsonwebtoken');
+import { Schema, model } from 'mongoose';
+import validator from 'validator';
+import bcrypt from "bcrypt";
+import jwt from 'jsonwebtoken'
 
-const monsterSchema = new mongoose.Schema({
+const monsterSchema = new Schema({
     name: {
         type: String,
         required: true,
@@ -59,7 +58,7 @@ const monsterSchema = new mongoose.Schema({
         ]
     },
     friends: [{
-        type: mongoose.Schema.Types.ObjectId,
+        type: Schema.Types.ObjectId,
         ref: 'Friends'
     }],
     rank: {
@@ -114,7 +113,18 @@ monsterSchema.methods.generateAuthTokenAndSaveMonster = async function () {
 
 }
 
-// compare
+monsterSchema.statics.findMonster = async (email, password) => {
+    const monster = await Monster.findOne({ email });
+    if (!monster) {
+        throw new Error("Email ou mot de passe invalide.");
+    }
+    const isPasswordValid = await bcrypt.compare(password, monster.password);
+    if (!isPasswordValid) {
+        throw new Error("Email ou mot de passe invalide.");
+    }
+
+    return monster;
+};
 
 // hash password
 monsterSchema.pre('save', async function () {
@@ -123,6 +133,6 @@ monsterSchema.pre('save', async function () {
     }
 });
 
-const Monster = mongoose.model('Monster', monsterSchema);
+const Monster = model('Monster', monsterSchema);
 
-module.exports = Monster;
+export default Monster;

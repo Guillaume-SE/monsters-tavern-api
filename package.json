@@ -1,4 +1,5 @@
 {
+  "type": "module",
   "name": "monsters-tavern-api",
   "version": "1.0.0",
   "description": "An api to make friends in fantasy universe",
@@ -18,7 +19,6 @@
     "validator": "^13.7.0"
   },
   "devDependencies": {
-    "morgan": "^1.10.0",
     "nodemon": "^2.0.20"
   }
 }

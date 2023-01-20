@@ -1,6 +1,6 @@
-require('dotenv').config();
-const jwt = require('jsonwebtoken');
-const Monster = require('../models/monster');
+import jwt from 'jsonwebtoken'
+import Monster from '../models/monster.js';
+
 
 const authentication = async (req, res, next) => {
     try {
@@ -10,7 +10,7 @@ const authentication = async (req, res, next) => {
         const monster = await Monster.findOne({ _id: decodedToken._id, 'authTokens.authToken': authToken });
 
         if(!monster) {
-            throw new Error();
+            throw new Error("Le monstre ne possède pas de jeton d\'authentification");
         }
 
         req.authToken = authToken;
@@ -22,4 +22,4 @@ const authentication = async (req, res, next) => {
     }
 };
 
-module.exports = authentication;
+export default authentication;
