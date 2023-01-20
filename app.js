@@ -4,6 +4,7 @@ import { connectDb } from './src/services/server.js';
 import monsterRoutes from './src/routes/monster.js';
 import loginRoutes from './src/routes/login.js';
 import logoutRoutes from './src/routes/logout.js';
+import adminRoutes from './src/routes/admin.js';
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -12,7 +13,8 @@ app
     .use(express.json())
     .use(monsterRoutes)
     .use(loginRoutes)
-    .use(logoutRoutes);
+    .use(logoutRoutes)
+    .use(adminRoutes);
 
 connectDb().catch(error => console.log(error));
 
