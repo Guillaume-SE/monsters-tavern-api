@@ -1,4 +1,4 @@
-import "dotenv/config.js";
+// import "dotenv/config.js";
 import jwt from 'jsonwebtoken'
 import Monster from '../models/monster.js';
 

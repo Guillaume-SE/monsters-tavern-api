@@ -6,10 +6,10 @@ const router = new express.Router();
 
 router.get('/monsters/:id', async (req, res, next) => {
     const monsterId = req.params.id;
-    
+
     try {
-        const monster = await Monster.findById(monsterId );
-        if(!monster) {
+        const monster = await Monster.findById(monsterId);
+        if (!monster) {
             const message = "Le monstre demandé n\'éxiste pas.";
             return res.status(404).json({ message });
         }
@@ -31,11 +31,11 @@ router.patch('/monsters/:id', async (req, res, next) => {
         updatedInfo.forEach(update => monster[update] = req.body[update]); // récupère la clé et met à jour la valeur
         await monster.save();
 
-        if(!monster) {
+        if (!monster) {
             const message = "Le monstre n\'existe pas.";
             return res.status(404).json({ message });
         }
-        
+
         const message = `Les données de ${monster.name} ont bien été mise à jour.`;
         res.json({ message, monster });
     } catch (error) {

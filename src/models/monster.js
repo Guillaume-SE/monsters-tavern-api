@@ -57,10 +57,14 @@ const monsterSchema = new Schema({
             "Dragon"
         ]
     },
-    friends: [{
-        type: Schema.Types.ObjectId,
-        ref: 'Friends'
-    }],
+    followers: {
+        type: Array,
+        default: []
+    },
+    following: {
+        type: Array,
+        default: []
+    },
     rank: {
         type: String,
         enum: [

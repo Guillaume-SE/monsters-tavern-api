@@ -1,10 +1,10 @@
-import "dotenv/config.js";
+// import "dotenv/config.js";
 import express from 'express';
 import { connectDb } from './src/services/server.js';
+
 import monsterRoutes from './src/routes/monster.js';
-import loginRoutes from './src/routes/login.js';
-import logoutRoutes from './src/routes/logout.js';
-import adminRoutes from './src/routes/admin.js';
+import authRoutes from './src/routes/auth.js';
+import followRoutes from './src/routes/follow.js';
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -12,9 +12,8 @@ const port = process.env.PORT || 3000;
 app
     .use(express.json())
     .use(monsterRoutes)
-    .use(loginRoutes)
-    .use(logoutRoutes)
-    .use(adminRoutes);
+    .use(authRoutes)
+    .use(followRoutes);
 
 connectDb().catch(error => console.log(error));
 
