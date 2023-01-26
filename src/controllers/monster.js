@@ -1,4 +1,5 @@
 import Monster from "../models/monster.js";
+import Follow from '../models/follow.js';
 
 export const getAllMonsters = async (req, res, next) => {
     try {
@@ -30,7 +31,9 @@ export const updateOwnAccount = async (req, res, next) => {
 
 export const deleteOwnAccount = async (req, res, next) => {
     try {
-        await req.monster.remove();
+        await Follow.deleteMany({ "monster": req.monster._id });
+        await Follow.deleteMany({ "monsterFollowed": req.monster._id });
+        await req.monster.deleteOne();
         const monsterDeleted = req.monster;
 
         const message = `${monsterDeleted.name} n\'est plus un de nos membres.`;
@@ -38,5 +41,6 @@ export const deleteOwnAccount = async (req, res, next) => {
     } catch (error) {
         const message = "Le monstre n\'a pu être supprimé. Veuillez réessayer.";
         res.status(500).json({ message, error });
+        console.log(error);
     }
 };

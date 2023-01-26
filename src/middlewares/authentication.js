@@ -1,4 +1,3 @@
-// import "dotenv/config.js";
 import jwt from 'jsonwebtoken'
 import Monster from '../models/monster.js';
 
@@ -10,7 +9,7 @@ const authentication = async (req, res, next) => {
         const decodedToken = jwt.verify(authToken, privateKey);
         const monster = await Monster.findOne({ _id: decodedToken._id, 'authTokens.authToken': authToken });
 
-        if(!monster) {
+        if (!monster) {
             throw new Error("Le monstre ne possède pas de jeton d\'authentification");
         }
 

@@ -21,7 +21,7 @@ export const login = async (req, res) => {
         res.json({ message, monster });
     } catch (error) {
         const message = "Le monstre n\'a pu être connecté. Veuillez réessayer.";
-        res.status(400).json({ message });
+        res.status(400).json({ message, error });
     }
 };
 

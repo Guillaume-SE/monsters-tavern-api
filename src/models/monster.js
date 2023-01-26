@@ -57,14 +57,6 @@ const monsterSchema = new Schema({
             "Dragon"
         ]
     },
-    followers: {
-        type: Array,
-        default: []
-    },
-    following: {
-        type: Array,
-        default: []
-    },
     rank: {
         type: String,
         enum: [

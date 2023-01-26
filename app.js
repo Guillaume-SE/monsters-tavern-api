@@ -17,7 +17,7 @@ app
 
 connectDb().catch(error => console.log(error));
 
-app.use(({res}) => {
+app.use(({ res }) => {
     const message = "Cette URL n'existe pas.";
     res.status(404).json({ message });
 });
