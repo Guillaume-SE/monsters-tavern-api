@@ -1,5 +1,4 @@
 import { Schema, model } from 'mongoose';
-import validator from 'validator';
 import bcrypt from "bcrypt";
 import jwt from 'jsonwebtoken'
 
@@ -9,23 +8,13 @@ const monsterSchema = new Schema({
         required: true,
         unique: true,
         minLength: 1,
-        maxLength: 35,
-        validate(name) {
-            if (!validator.isLength(name, [{ min: 1, max: 35 }])) {
-                throw new Error("Le nom doit être compris entre 1 et 35 caractères.");
-            }
-        }
+        maxLength: 35
     },
     email: {
         type: String,
         required: true,
         unique: true,
-        lowercase: true,
-        validate(email) {
-            if (!validator.isEmail(email)) {
-                throw new Error("Email non valide.");
-            }
-        }
+        lowercase: true
     },
     password: {
         type: String,
@@ -40,31 +29,24 @@ const monsterSchema = new Schema({
             "Sorcier",
             "Espion",
             "Enchanteur",
-            "Guérisseur",
+            "Soigneur",
             "Archer",
-            "Assassin"
+            "Mage"
         ]
     },
     race: {
         type: String,
         enum: [
             "Démon",
-            "Loup-Garou",
+            "Lycanthrope",
             "Vampire",
             "Orc",
             "Gobelin",
             "Elfe",
-            "Dragon"
+            "Dragon",
+            "Harpie",
+            "Goule"
         ]
-    },
-    rank: {
-        type: String,
-        enum: [
-            "MEMBRE",
-            "CAPITAINE",
-            "COMMANDANT"
-        ],
-        default: "MEMBRE"
     },
     authTokens: [{
         authToken: {

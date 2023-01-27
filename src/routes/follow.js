@@ -9,7 +9,7 @@ import {
 
 const router = express.Router();
 
-router.patch('/follow/:id', authentication, follow);
+router.post('/follow/:id', authentication, follow);
 
 router.get('/followers/me', authentication, getMonsterFollowers);
 

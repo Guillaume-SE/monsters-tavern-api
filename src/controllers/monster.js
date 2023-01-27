@@ -36,7 +36,7 @@ export const deleteOwnAccount = async (req, res, next) => {
         await req.monster.deleteOne();
         const monsterDeleted = req.monster;
 
-        const message = `${monsterDeleted.name} n\'est plus un de nos membres.`;
+        const message = `${monsterDeleted.name} a bien été supprimé.`;
         res.json({ message, monsterDeleted });
     } catch (error) {
         const message = "Le monstre n\'a pu être supprimé. Veuillez réessayer.";
