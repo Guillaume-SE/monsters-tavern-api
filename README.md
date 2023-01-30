@@ -10,7 +10,7 @@ npm run start
 
 ### Available endpoints:
 
-#### Auth
+### Auth
 
 Create an account: `POST /signup`  
 Auth: not required
@@ -28,6 +28,7 @@ Auth: not required
 ```
 * Login to your account: `POST /login`  
 Auth: not required
+
 ##### Parameters
 
 ```
@@ -44,7 +45,6 @@ Auth: required
 
 no parameters
 
-
 * Logout your account from all plateforms where you login: `POST /logout/all`  
 Auth: required
 
@@ -52,7 +52,7 @@ Auth: required
 
 no parameters
 
-#### Monster
+### Monster
 
 * Get all monsters `GET /monsters`  
 Auth: not required
@@ -85,7 +85,7 @@ Auth: required + only for the connected user
 
 no parameters
 
-#### Follow
+### Follow
 
 * Follow a monster `POST /follow/:id`  
 Auth: required + only for the connected monster
