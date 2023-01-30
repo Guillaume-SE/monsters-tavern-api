@@ -48,6 +48,10 @@ const monsterSchema = new Schema({
             "Goule"
         ]
     },
+    avatar: {
+        type: String,
+        required: true
+    },
     authTokens: [{
         authToken: {
             type: String,
@@ -104,7 +108,6 @@ monsterSchema.statics.findMonster = async (email, password) => {
     return monster;
 };
 
-// hash password
 monsterSchema.pre('save', async function () {
     if (this.isModified('password')) {
         this.password = await bcrypt.hash(this.password, 8);
