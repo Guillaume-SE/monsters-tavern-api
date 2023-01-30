@@ -49,8 +49,7 @@ const monsterSchema = new Schema({
         ]
     },
     avatar: {
-        type: String,
-        required: true
+        type: String
     },
     authTokens: [{
         authToken: {
