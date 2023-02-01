@@ -28,10 +28,10 @@ const monsterSchema = new Schema({
             "Alchimiste",
             "Sorcier",
             "Espion",
-            "Enchanteur",
             "Soigneur",
             "Archer",
-            "Mage"
+            "Nécromancien",
+            "Assassin"
         ]
     },
     race: {
