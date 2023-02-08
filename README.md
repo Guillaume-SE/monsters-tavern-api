@@ -38,20 +38,6 @@ Auth: not required
 }
 ```
 
-* Logout your account: `POST /logout`  
-Auth: required
-
-##### Parameters
-
-no parameters
-
-* Logout your account from all plateforms where you login: `POST /logout/all`  
-Auth: required
-
-##### Parameters
-
-no parameters
-
 ### Monster
 
 * Get all monsters `GET /monsters`  
