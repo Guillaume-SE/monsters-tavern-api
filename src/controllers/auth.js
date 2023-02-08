@@ -6,7 +6,7 @@ export const signup = async (req, res, next) => {
     try {
         const authToken = await monster.generateAuthTokenAndSaveMonster();
         const message = "Un monstre nous a rejoins avec succès.";
-        res.status(201).json({ message, monster }); // + authToken
+        res.status(201).json({ message, monster });
     } catch (error) {
         const message = "Un monstre a échoué à nous rejoindre.";
         res.status(400).json({ message, error });
@@ -17,8 +17,7 @@ export const login = async (req, res) => {
     try {
         const monster = await Monster.findMonster(req.body.email, req.body.password);
         const authToken = await monster.generateAuthTokenAndSaveMonster();
-        const message = "Le monstre s\'est connecté avec succès.";
-        res.json({ message, monster });
+        res.json( monster );
     } catch (error) {
         const message = "Le monstre n\'a pu se connecter. Veuillez réessayer.";
         res.status(400).json({ message, error });

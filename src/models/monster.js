@@ -71,7 +71,6 @@ monsterSchema.methods.toJSON = function () {
     const monster = this.toObject();
 
     delete monster.password;
-    delete monster.authTokens;
     delete monster.__v;
 
     return monster;
@@ -84,10 +83,7 @@ monsterSchema.methods.generateAuthTokenAndSaveMonster = async function () {
         {
             _id: this._id.toString()
         },
-        privateKey,
-        {
-            expiresIn: '24h'
-        });
+        privateKey);
     this.authTokens.push({ authToken });
     await this.save();
     return authToken;
