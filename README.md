@@ -47,8 +47,15 @@ Auth: not required
 
 no parameters
 
-* Update monster `PATCH /monsters/me`  
-Auth: required + only for the connected user
+* Get one monster by id `GET /monsters/:id`  
+Auth: not required
+
+##### Parameters
+
+no parameters
+
+* Update your account `PATCH /monsters/update/:id`  
+Auth: required
 
 ##### Parameters
 
@@ -64,8 +71,8 @@ Auth: required + only for the connected user
 }
 ```
 
-* Delete monster `DELETE /monsters/me`  
-Auth: required + only for the connected user
+* Delete your account `DELETE /monsters/delete/:id`  
+Auth: required
 
 ##### Parameters
 
@@ -74,38 +81,30 @@ no parameters
 ### Follow
 
 * Follow a monster `POST /follow/:id`  
-Auth: required + only for the connected monster
-
-##### Parameters
-
-```
-{
-    "id": "string"
-}
-```
-
-* Get monster followers `GET /followers/me`  
-Auth: required + only for connected monster
+Auth: required
 
 ##### Parameters
 
 no parameters
 
-* Get monster following `GET /following/me`  
-Auth: required + only for connected monster
+* Get your followers `GET /followers/:id`  
+Auth: required
+
+##### Parameters
+
+no parameters
+
+* Get your following `GET /following/:id`  
+Auth: required
 
 ##### Parameters
 
 no parameters
 
 * Unfollow a monster `POST /unfollow/:id`  
-Auth: required + only for the connected monster
+Auth: required
 
 ##### Parameters
 
-```
-{
-    "id": "string"
-}
-```
+no parameters
 
