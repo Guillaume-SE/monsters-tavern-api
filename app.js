@@ -1,6 +1,7 @@
 import express from 'express';
 import { connectDb } from './src/services/server.js';
 import cors from 'cors';
+import cookieParser from 'cookie-parser';
 
 import monsterRoutes from './src/routes/monster.js';
 import authRoutes from './src/routes/auth.js';
@@ -12,6 +13,7 @@ const port = process.env.PORT || 3000;
 app
     .use(express.json())
     .use(cors())
+    .use(cookieParser())
     .use(monsterRoutes)
     .use(authRoutes)
     .use(followRoutes);

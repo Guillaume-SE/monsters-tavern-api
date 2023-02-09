@@ -1,25 +1,27 @@
 import jwt from 'jsonwebtoken'
-import Monster from '../models/monster.js';
 
 
-const authentication = async (req, res, next) => {
-    try {
-        const privateKey = process.env.PRIVATE_KEY;
-        const authToken = req.header('Authorization').replace('Bearer ', '');
-        const decodedToken = jwt.verify(authToken, privateKey);
-        const monster = await Monster.findOne({ _id: decodedToken._id, 'authTokens.authToken': authToken });
+export const authentication = (req, res, next) => {
+    const token = req.cookies.access_token;
 
-        if (!monster) {
-            throw new Error("Le monstre ne possède pas de jeton d\'authentification");
+    if (!token) {
+        const message = "Vous n'êtes pas authentifié.";
+        return res
+            .status(401)
+            .json(message);
+    }
+
+    const jwtKey = process.env.JWT_KEY;
+    jwt.verify(token, jwtKey, (error, monster) => {
+        if (error) {
+            const message = "Le jeton d'authentification est invalide."
+            res
+                .status(403)
+                .json(message);
         }
-
-        req.authToken = authToken;
         req.monster = monster;
         next();
-    } catch (error) {
-        const message = "Vous devez vous authentifier.";
-        res.status(401).json({ message });
-    }
-};
+    });
+}
 
 export default authentication;

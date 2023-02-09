@@ -1,53 +1,57 @@
 import Monster from '../models/monster.js';
+import jwt from 'jsonwebtoken';
+import bcrypt from "bcrypt";
 
 export const signup = async (req, res, next) => {
-    const monster = new Monster(req.body);
+    const newMonster = new Monster(req.body);
 
     try {
-        const authToken = await monster.generateAuthTokenAndSaveMonster();
-        const message = "Un monstre nous a rejoins avec succès.";
-        res.status(201).json({ message, monster });
+        await newMonster.save();
+
+        const jwtKey = process.env.JWT_KEY;
+        const jwtValidity = process.env.JWT_VALIDITY;
+        const token = jwt.sign({ id: newMonster._id }, jwtKey, {expiresIn: jwtValidity});
+        const { password, ...othersData } = newMonster._doc;
+
+        res
+            .cookie("access_token", token, { httpOnly: true })
+            .status(201)
+            .json(othersData);
+
     } catch (error) {
         const message = "Un monstre a échoué à nous rejoindre.";
-        res.status(400).json({ message, error });
+        res
+            .status(400)
+            .json({ message, error });
     }
 };
 
 export const login = async (req, res) => {
     try {
-        const monster = await Monster.findMonster(req.body.email, req.body.password);
-        const authToken = await monster.generateAuthTokenAndSaveMonster();
-        res.json( monster );
+        const monster = await Monster.findOne({ email: req.body.email });
+        const isCorrect = await bcrypt.compare(req.body.password, monster.password);
+
+        if (!monster || !isCorrect) {
+            const message = "Adresse email ou mot de passe incorrect.";
+
+            return res
+                .status(400)
+                .json(message);
+        }
+
+        const jwtKey = process.env.JWT_KEY;
+        const jwtValidity = process.env.JWT_VALIDITY;
+        const token = jwt.sign({ id: monster._id }, jwtKey, {expiresIn: jwtValidity});
+        const { password, ...othersData } = monster._doc;
+
+        res
+            .cookie("access_token", token, { httpOnly: true })
+            .status(201)
+            .json(othersData);
     } catch (error) {
         const message = "Le monstre n\'a pu se connecter. Veuillez réessayer.";
-        res.status(400).json({ message, error });
-    }
-};
-
-export const logout = async (req, res) => {
-    try {
-        req.monster.authTokens = req.monster.authTokens.filter((authToken) => { // filtre les tokens de l'utilisateur
-            return authToken.authToken !== req.authToken; // isole le token actuel
-        });
-
-        await req.monster.save();
-        const message = "Déconnexion réussie.";
-        res.json({ message });
-    } catch (error) {
-        const message = "Deconnexion impossible. Veuillez réessayer.";
-        res.status(500).json({ message });
-    }
-};
-
-// logout on every platforms
-export const logoutEverywhere = async (req, res) => {
-    try {
-        req.monster.authTokens = [];
-        await req.monster.save();
-        const message = "Déconnexion de tous vos appareils réussie.";
-        res.json({ message });
-    } catch (error) {
-        const message = "Déconnexion impossible. Veuillez réessayer.";
-        res.status(500).json({ message });
+        res
+            .status(400)
+            .json({ message, error });
     }
 };

@@ -1,6 +1,5 @@
 import { Schema, model } from 'mongoose';
 import bcrypt from "bcrypt";
-import jwt from 'jsonwebtoken'
 
 const monsterSchema = new Schema({
     name: {
@@ -50,13 +49,7 @@ const monsterSchema = new Schema({
     },
     avatar: {
         type: String
-    },
-    authTokens: [{
-        authToken: {
-            type: String,
-            required: true
-        }
-    }],
+    }
 },
     {
         timestamps: {
@@ -65,43 +58,6 @@ const monsterSchema = new Schema({
         }
     }
 );
-
-// retire des clés du retour JSON
-monsterSchema.methods.toJSON = function () {
-    const monster = this.toObject();
-
-    delete monster.password;
-    delete monster.__v;
-
-    return monster;
-};
-
-// JWT
-monsterSchema.methods.generateAuthTokenAndSaveMonster = async function () {
-    const privateKey = process.env.PRIVATE_KEY;
-    const authToken = jwt.sign(
-        {
-            _id: this._id.toString()
-        },
-        privateKey);
-    this.authTokens.push({ authToken });
-    await this.save();
-    return authToken;
-
-}
-
-monsterSchema.statics.findMonster = async (email, password) => {
-    const monster = await Monster.findOne({ email });
-    if (!monster) {
-        throw new Error("Email ou mot de passe invalide.");
-    }
-    const isPasswordValid = await bcrypt.compare(password, monster.password);
-    if (!isPasswordValid) {
-        throw new Error("Email ou mot de passe invalide.");
-    }
-
-    return monster;
-};
 
 monsterSchema.pre('save', async function () {
     if (this.isModified('password')) {

@@ -13,9 +13,9 @@ router.get('/monsters', getAllMonsters);
 
 router.get('/monsters/:id', getMonsterById);
 
-router.patch('/monsters/update/me', authentication, updateOwnAccount);
+router.patch('/monsters/update/:id', authentication, updateOwnAccount);
 
-router.delete('/monsters/delete/me', authentication, deleteOwnAccount);
+router.delete('/monsters/delete/:id', authentication, deleteOwnAccount);
 
 
 export default router;

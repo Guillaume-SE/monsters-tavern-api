@@ -19,15 +19,6 @@ const followSchema = new Schema({
     }
 );
 
-followSchema.methods.toJSON = function () {
-    const follow = this.toObject();
-
-    delete follow.__v;
-
-    return follow;
-};
-
-
 const Follow = model('Follow', followSchema);
 
 export default Follow;
