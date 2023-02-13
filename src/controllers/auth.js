@@ -16,7 +16,7 @@ export const signup = async (req, res, next) => {
         res
             .cookie("access_token", token, { httpOnly: true })
             .status(201)
-            .json(othersData);
+            .json({token});
 
     } catch (error) {
         const message = "Un monstre a échoué à nous rejoindre.";
@@ -28,7 +28,8 @@ export const signup = async (req, res, next) => {
 
 export const login = async (req, res) => {
     try {
-        const monster = await Monster.findOne({ email: req.body.email });
+        const monster = await Monster.findOne({ email: req.body.email })
+            .select('-__v');
         const isCorrect = await bcrypt.compare(req.body.password, monster.password);
 
         if (!monster || !isCorrect) {
@@ -47,7 +48,7 @@ export const login = async (req, res) => {
         res
             .cookie("access_token", token, { httpOnly: true })
             .status(201)
-            .json(othersData);
+            .json({token});
     } catch (error) {
         const message = "Le monstre n\'a pu se connecter. Veuillez réessayer.";
         res

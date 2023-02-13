@@ -58,7 +58,7 @@ export const unfollow = async (req, res, next) => {
 
 export const getMonsterFollowers = async (req, res, next) => {
     try {
-        const followers = await Follow.find({ "monsterFollowed": req.monster.id });
+        const followers = await Follow.find({ "monsterFollowed": req.params.id });
         res.json(followers);
     } catch (error) {
         const message = "La liste des monstres qui vous suive n\'a pu être récupérée.";
@@ -70,7 +70,7 @@ export const getMonsterFollowers = async (req, res, next) => {
 
 export const getMonsterFollowing = async (req, res, next) => {
     try {
-        const following = await Follow.find({ "monster": req.monster.id });
+        const following = await Follow.find({ "monster": req.params.id });
         res.json(following);
     } catch (error) {
         const message = "La liste des monstres que vous suivez n\'a pu être récupérée.";
