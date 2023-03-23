@@ -46,8 +46,11 @@ export const updateOwnAccount = async (req, res, next) => {
                 const salt = 10;
                 hash = await bcrypt.hash(password, salt);
             }
+
             const updatedMonster = await Monster.findOneAndUpdate(
-                req.params.id,
+                {
+                    _id: req.params.id
+                },
                 {
                     $set: {
                         password: hash,
@@ -60,12 +63,29 @@ export const updateOwnAccount = async (req, res, next) => {
                 }
             );
 
-            res.json(updatedMonster);
+            res.json(othersDatas);
         } catch (error) {
-            const message = "Les données n\'ont pu être mise à jour. Veuillez réessayer.";
-            res
-                .status(500)
-                .json({ message, error });
+
+            if (error.keyValue.hasOwnProperty('name')) {
+                const message = "Ce nom est déjà utilisé";
+                const tag = "name";
+                return res
+                    .status(400)
+                    .json({ message, tag, error });
+            }
+            if (error.keyValue.hasOwnProperty('email')) {
+
+                const message = "Cet email est déjà utilisé";
+                const tag = "email";
+                return res
+                    .status(400)
+                    .json({ message, tag, error });
+            } else {
+                const message = "Les données n\'ont pu être mise à jour. Veuillez réessayer.";
+                res
+                    .status(500)
+                    .json({ message, error });
+            }
         }
     }
 };

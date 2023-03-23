@@ -1,5 +1,6 @@
 import { Schema, model } from 'mongoose';
 import bcrypt from "bcrypt";
+import isEmail from 'validator/lib/isEmail.js';
 
 const monsterSchema = new Schema({
     name: {
@@ -13,7 +14,8 @@ const monsterSchema = new Schema({
         type: String,
         required: true,
         unique: true,
-        lowercase: true
+        lowercase: true,
+        validate: [isEmail, 'invalid email']
     },
     password: {
         type: String,
