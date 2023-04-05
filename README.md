@@ -8,6 +8,8 @@ edit your .env
 npm run start
 ```
 
+The project work with a MongoDB database !
+
 ### Available endpoints:
 
 ### Auth
