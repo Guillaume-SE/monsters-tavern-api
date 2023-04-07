@@ -36,6 +36,24 @@ export const getMonsterById = async (req, res, next) => {
     }
 };
 
+export const getMonsterByName = async (req, res, next) => {
+    try {
+        const monster = await Monster.find(
+            {
+                name: {$regex: req.params.name, $options: 'i'}
+            }
+        ).select("-email -password -created_at -updated_at -__v");
+
+        res.json(monster);
+    } catch (error) {
+        console.log(error);
+        const message = "Aucun résultat n\'a pu être récupéré.";
+        res
+            .status(500)
+            .json({ message, error });
+    }
+};
+
 export const updateOwnAccount = async (req, res, next) => {
 
     if (req.params.id === req.monster.id) {
