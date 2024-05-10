@@ -1,3 +1,9 @@
+![Static Badge](https://img.shields.io/badge/javascript-EFD81B?style=for-the-badge&logo=javascript&logoColor=black)
+![Static Badge](https://img.shields.io/badge/typescript-387CC8?style=for-the-badge&logo=typescript&logoColor=white)
+![Static Badge](https://img.shields.io/badge/node.js-6DA55F?style=for-the-badge&logo=node.js&logoColor=white)
+![Static Badge](https://img.shields.io/badge/express-0D1116?style=for-the-badge&logo=express&logoColor=white)
+![Static Badge](https://img.shields.io/badge/Mongo_DB-0D1116?style=for-the-badge&logo=mongodb&logoColor=green)
+
 ## Start the project
 
 ```
